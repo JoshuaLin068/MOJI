@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Idea Generator</title>
+</head>
+<body>
+    <h1>Welcome to the Travel Idea Generator!</h1>
+    <p>Click the button below to generate your next travel idea.</p>
+    <button id="generateButton">Generate Idea</button>
+    <p id="travelIdea"></p>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', () => {
+            fetchTravelIdea();
+        });
+
+        async function fetchTravelIdea() {
+            const response = await fetch('https://api.gemini.com/generate'); // This will be replaced with the real API
+            const idea = await response.json();
+            document.getElementById('travelIdea').innerText = idea.suggestion;
+        }
+    </script>
+</body>
+</html>
