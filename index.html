@@ -7,7 +7,11 @@
 </head>
 <body>
     <h1>Welcome to the Travel Idea Generator!</h1>
-    <p>Click the button below to generate your next travel idea.</p>
+    <p>Enter your location and click the button below to generate an event idea near you.</p>
+
+    <label for="locationInput">Enter Location:</label>
+    <input type="text" id="locationInput" placeholder="e.g., New York">
+    
     <button id="generateButton">Generate Idea</button>
     <p id="travelIdea"></p>
 
@@ -17,6 +21,12 @@
         });
 
         async function fetchTravelIdea() {
+            const location = document.getElementById('locationInput').value;
+            if (!location) {
+                document.getElementById('travelIdea').innerText = 'Please enter a location.';
+                return;
+            }
+
             try {
                 const response = await fetch('https://api.gemini.com/generate', {
                     method: 'POST',
@@ -25,9 +35,10 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        prompt: "Generate a travel idea"
+                        prompt: `Give me an idea of a 2-hour event near ${location}, be concise.`
                     })
                 });
+
                 const idea = await response.json();
                 document.getElementById('travelIdea').innerText = idea.suggestion;
             } catch (error) {
@@ -37,4 +48,3 @@
     </script>
 </body>
 </html>
-
